@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/92390b5043.js" crossorigin="anonymous"></script>
+    <script src="{% static 'script.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container navbar-container">
+            <a class="navbar-brand" href="#">
+                <!-- <svg aria-hidden="true" class="pre-logo-svg" focusable="false" viewBox="0 0 24 24" role="img"
+                    width="40px" height="40px" fill="none">
+                    <path fill="currentColor" fill-rule="evenodd"
+                        d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
+                        clip-rule="evenodd"></path>
+                </svg> -->
+                <img src="../media/AA.png" alt="Logo" srcset="" class="header-logo">
+            </a>
+
+            <!-- Categories Menu -->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../products">All Products</a>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" type="link">
+                            Categories
+                        </a>
+                        <div class="dropdown-menu border-0 shadow-sm text-center">
+                            {% for category in categories %}
+                            <a class="dropdown-item" href="../products/{{ category }}">{{ category }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="navbar-nav">
+                <form class="form-inline">
+                    <input class="form-control mr-2" type="text" placeholder="Search" id="navbar-search"
+                        onkeyup="searchProducts()">
+                </form>
+                <a class="nav-item nav-link" href="#">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
+                <a class="nav-item nav-link" href="#">
+                    <i class="fa-brands fa-opencart"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+    <footer class="bg-dark text-white py-3 footer">
+        <div class="container">
+            <p>&copy; 2023 My E-Commerce Store</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+            // Loop through each dropdown toggle element and add an event listener
+            dropdownToggles.forEach(function (dropdownToggle) {
+                dropdownToggle.addEventListener("click", function () {
+                    // Toggle the 'show' class on the parent element with class 'dropdown'
+                    var dropdownMenu = this.parentElement.querySelector('.dropdown-menu');
+                    if (dropdownMenu) {
+                        if (dropdownMenu.classList.contains('show')) {
+                            dropdownMenu.classList.remove('show');
+                        } else {
+                            dropdownMenu.classList.add('show');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

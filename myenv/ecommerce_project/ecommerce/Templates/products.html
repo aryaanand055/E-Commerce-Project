@@ -1,0 +1,36 @@
+{% extends "master.html" %}
+
+{% block title %}E-Commerce Store{% endblock %}
+
+{% block content %}
+
+<section class="container my-5">
+    <h2 class="mb-5 p-3">{{ pageHeading }}</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4 col-md-6 mb-4 product-small">
+            <div class="card product-card">
+                <div class="product-image-container">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top product_image">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-heart" viewBox="0 0 16 16">
+                        <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">
+                        {{ product.description|slice:":45" }}
+                        {% if product.description|length > 45 %} ...{% endif %}</p>
+                    <p class="card-text">Price: ₹{{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+{% endblock %}
