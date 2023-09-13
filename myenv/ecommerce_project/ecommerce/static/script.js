@@ -15,3 +15,8 @@ function searchProducts(e) {
         }
     });
 }
+
+function filterLTH() {
+    // Get all the products and then sort it in the price ascending order. then replace it
+    let productsList = document.querySelector("")
+}

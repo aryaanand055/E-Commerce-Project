@@ -5,7 +5,28 @@
 {% block content %}
 
 <section class="container my-5">
-    <h2 class="mb-5 p-3">{{ pageHeading }}</h2>
+    <div class="header-products d-flex flex-row justify-content-between">
+        <div class="header-heading">
+            <h2 class="mb-5 p-3 flex">{{ pageHeading }}</h2>
+        </div>
+
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" type="link">
+                Sort By
+            </a>
+            <div class="dropdown-menu border-0 shadow-sm text-right ">
+                <a class="dropdown-item" href="?sort=id&order=desc&category={{ request.GET.category }}">Newest</a>
+                <a class="dropdown-item" href="?sort=id&order=asc&category={{ request.GET.category }}">Oldest</a>
+                <a class="dropdown-item" href="?sort=price&order=asc&category={{ request.GET.category }}"
+                    onclick="filterLTH">Price: Low to High</a>
+                <a class="dropdown-item" href="?sort=price&order=desc&category={{ request.GET.category }}">Price: High
+                    to Low</a>
+                <a class="dropdown-item" href="?sort=name&order=asc&category={{ request.GET.category }}">Name:
+                    Ascending</a>
+
+            </div>
+        </div>
+    </div>
     <div class="row">
         {% for product in products %}
         <div class="col-lg-4 col-md-6 mb-4 product-small">

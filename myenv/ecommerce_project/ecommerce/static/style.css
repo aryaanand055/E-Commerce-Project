@@ -76,4 +76,6 @@ footer .navbar-container {
 
 }
 
-.product-tagline {}
+.product-details img {
+    object-fit: cover;
+}
