@@ -27,12 +27,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container navbar-container">
             <a class="navbar-brand" href="#">
-                <!-- <svg aria-hidden="true" class="pre-logo-svg" focusable="false" viewBox="0 0 24 24" role="img"
-                    width="40px" height="40px" fill="none">
-                    <path fill="currentColor" fill-rule="evenodd"
-                        d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
-                        clip-rule="evenodd"></path>
-                </svg> -->
+
                 <img src="../media/AA.png" alt="Logo" srcset="" class="header-logo">
             </a>
 
@@ -56,6 +51,19 @@
             </ul>
 
             <div class="navbar-nav">
+                <!-- Add username if logged in  -->
+                {% if user.is_authenticated %}
+                <div class="m-2 text-capitalize">{{user.username}}</div>
+                <form method="post" action="{% url 'logoutuser' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+                </form>
+                {% else %}
+                <a href="{% url 'loginuser' %}">Login</a>
+                <a href="{% url 'signnewuser' %}">Sign Up</a>
+
+                {% endif %}
+
                 <form class="form-inline">
                     <input class="form-control mr-2" type="text" placeholder="Search" id="navbar-search"
                         onkeyup="searchProducts()">
@@ -86,7 +94,8 @@
             dropdownToggles.forEach(function (dropdownToggle) {
                 dropdownToggle.addEventListener("click", function () {
                     // Toggle the 'show' class on the parent element with class 'dropdown'
-                    var dropdownMenu = this.parentElement.querySelector('.dropdown-menu');
+                    var dropdownMenu = this.parentElement.querySelector(
+                        '.dropdown-menu');
                     if (dropdownMenu) {
                         if (dropdownMenu.classList.contains('show')) {
                             dropdownMenu.classList.remove('show');
