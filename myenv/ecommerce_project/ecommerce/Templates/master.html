@@ -56,12 +56,18 @@
                 <div class="m-2 text-capitalize">{{user.username}}</div>
                 <form method="post" action="{% url 'logoutuser' %}">
                     {% csrf_token %}
-                    <input type="submit" value="Logout">
+                    <li class="nav-item">
+                        <input type="submit" value="Logout" class="nav-link link-danger">
+                        <!-- <a href="{% url 'loginuser' %}" class="nav-link">Login</a> -->
+                    </li>
                 </form>
                 {% else %}
-                <a href="{% url 'loginuser' %}">Login</a>
-                <a href="{% url 'signnewuser' %}">Sign Up</a>
-
+                <li class="nav-item">
+                    <a href="{% url 'loginuser' %}" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'signnewuser' %}" class="nav-link">Sign Up</a>
+                </li>
                 {% endif %}
 
                 <form class="form-inline">

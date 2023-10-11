@@ -3,37 +3,37 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from .forms import CustomUserCreationForm
+from django.contrib import messages
 
-
-def signnewuser(req):
-    print(req.method)
-    if req.method == "POST":
-        print("Successfully started")
-        if req.POST.get("password1") == req.POST.get("password2"):
-            try:
-                saveuser = User.objects.create_user(req.POST.get("username"), password=req.POST.get("password1"))
-                saveuser.save()
-                return render(req, "signup.html", {"form": UserCreationForm(), "info":f"THe user {req.POST.get('username')} is saved successfully"})
-            except:
-                return render(req, "signup.html", {"form": UserCreationForm(), "error":f"THe user{req.POST.get('username')} is already added to the db"})
-
+def signnewuser(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log the user in after registration
+            messages.success(request, f"The user {user.username} is registered successfully.")
+            return redirect('products')  # Redirect to the home page or any other page you prefer
         else:
-            return render(req, "signup.html", {"form": UserCreationForm(), "error":f"THe user {req.POST.get('username')} is not added due to incoorectly matched passwords"})
-
+            messages.error(request, "Registration failed. Please correct the errors.")
     else:
-        return render(req, "signup.html", {'form': UserCreationForm})
-    
+        form = CustomUserCreationForm()
+
+    return render(request, "signup.html", {"form": form})
+
+
 def loginuser(req):
     if req.method == "POST":
-        loginsuccess = authenticate(req, username = req.POST.get("username"), password=req.POST.get("password"))
+        loginsuccess = authenticate(req, username=req.POST.get("username"), password=req.POST.get("password"))
         if loginsuccess is None:
-            return render(req, "login.html", {'form': AuthenticationForm, "error": "the username and password is wrong..."})
+            form = AuthenticationForm()
+            return render(req, "login.html", {'form': form, "error": "The username and password are incorrect..."})
         else:
             login(req, loginsuccess)
             return redirect("/products")
     else:
-        return render(req, "login.html" , {'form':AuthenticationForm})
-        
+        form = AuthenticationForm()  # Instantiate AuthenticationForm
+        return render(req, "login.html", {'form': form})    
 def logoutuser(req):
     if req.method =="POST":
         logout(req)

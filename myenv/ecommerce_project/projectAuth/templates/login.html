@@ -1,24 +1,36 @@
-<!DOCTYPE html>
+{% extends "master.html" %}
 
-<head>
-    <title>Login</title>
-</head>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center mt-4">Login</h1>
+            <form method="post" class="mt-4 form-group">
+                {% csrf_token %}
 
-<body>
+                <div class="form-group mb-3">
+                    <label for="exampleInputEmail1">{{ form.username.label_tag }}</label>
+                    <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username"
+                        autofocus="" required="" id="id_username" control-id="ControlID-3" class="form-control">
+                    {% if form.username.errors %}
+                    <small class="text-danger">{{ form.username.errors }}</small>
+                    {% endif %}
+                </div>
 
-    <center>
-        <form method="post">
-            {% csrf_token %}
-            <h1>Login Page</h1>
-            <hr>
-            <table border="1">
-                {{form}}
-            </table>
-            <input type="submit" value="Login">
-            <br>
-            <b style="color: red;">{{error}}</b>
-        </form>
-    </center>
-</body>
+                <div class="form-group mb-3">
+                    <label for="id_password">{{ form.password.label_tag }}</label>
+                    <input type="password" name="password" autocomplete="current-password" required="" id="id_password"
+                        control-id="ControlID-4" class="form-control">
+                    {% if form.password.errors %}
+                    <small class="text-danger">{{ form.password.errors }}</small>
+                    {% endif %}
+                </div>
 
-</html>
+                <div class="btn-group w-100 mb-2">
+                    <button type="submit" class="btn btn-dark">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
