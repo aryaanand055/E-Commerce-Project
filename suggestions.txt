@@ -1,0 +1,1 @@
+add other details of the user to a new model
