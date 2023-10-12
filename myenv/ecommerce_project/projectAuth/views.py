@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .forms import CustomUserCreationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def signnewuser(request):
     if request.method == "POST":
@@ -38,4 +39,8 @@ def logoutuser(req):
     if req.method =="POST":
         logout(req)
         return redirect("/auth/login")
+
+# @login_required
+def profile(req):
+    return render (req, "profile.html")
 
